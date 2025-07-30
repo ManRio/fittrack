@@ -1,0 +1,50 @@
+<section class="progress-container">
+  <h1>📈 Progreso</h1>
+
+  <form (ngSubmit)="addEntry()" class="progress-form">
+    <label>
+      Fecha:
+      <input type="date" [(ngModel)]="newEntry.date" name="date" required />
+    </label>
+    <label>
+      Peso (kg):
+      <input
+        type="number"
+        [(ngModel)]="newEntry.weight"
+        name="weight"
+        required
+      />
+    </label>
+    <label>
+      Altura (cm):
+      <input
+        type="number"
+        [(ngModel)]="newEntry.height"
+        name="height"
+        required
+      />
+    </label>
+    <button type="submit">➕ Añadir</button>
+  </form>
+
+  <div *ngIf="entries.length === 0" class="no-data">
+    Aún no hay datos registrados.
+  </div>
+
+  <div *ngIf="entries.length > 0" class="chart-section">
+    <canvas
+      baseChart
+      [data]="chartData"
+      [options]="chartOptions"
+      chartType="line"
+    >
+    </canvas>
+
+    <ul class="entry-list">
+      <li *ngFor="let e of entries; let i = index">
+        {{ e.date }} → {{ e.weight }}kg, {{ e.height }}cm
+        <button (click)="deleteEntry(i)">❌</button>
+      </li>
+    </ul>
+  </div>
+</section>

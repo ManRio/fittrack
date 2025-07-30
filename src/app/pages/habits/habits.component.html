@@ -1,0 +1,26 @@
+<section class="habits-container">
+  <h1>✅ Hábitos Recomendados</h1>
+
+  <p *ngIf="!goal">No se ha definido un objetivo aún en tu perfil.</p>
+  <p *ngIf="goal"><strong>Objetivo:</strong> {{ goal }}</p>
+
+  <ul *ngIf="habits.length > 0" class="habits-list">
+    <li *ngFor="let habit of habits; let i = index">
+      <input
+        type="checkbox"
+        [checked]="habit.done"
+        (change)="toggleHabit(i)"
+        [id]="'habit-checkbox-' + i"
+        title="Marcar como completado"
+        placeholder="Marcar hábito"
+      />
+      <label [for]="'habit-checkbox-' + i">{{ habit.name }}</label>
+    </li>
+  </ul>
+
+  <div *ngIf="habits.length === 0 && goal">
+    <p>No se han definido hábitos para este objetivo.</p>
+  </div>
+
+  <button (click)="saveHabits()">💾 Guardar cambios</button>
+</section>

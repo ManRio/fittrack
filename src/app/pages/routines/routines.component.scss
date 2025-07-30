@@ -1,0 +1,150 @@
+.routines-fullscreen {
+  width: 100%;
+  min-height: 100vh;
+  padding: 2rem;
+  background: #fefefe;
+  display: flex;
+  flex-direction: column;
+}
+
+.routines-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 2rem;
+
+  h1 {
+    margin: 0;
+  }
+
+  .add-btn {
+    background: #f1c40f; // Amarillo FitTrack
+    color: #000;
+    padding: 0.6rem 1.2rem;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+
+    &:hover {
+      background: #d4ac0d;
+    }
+  }
+}
+
+.filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+  margin-bottom: 1.5rem;
+
+  button {
+    padding: 0.5rem 1rem;
+    border: none;
+    background: #ddd;
+    border-radius: 20px;
+    cursor: pointer;
+    color: #000;
+    font-weight: 500;
+
+    &.active {
+      background: #f1c40f;
+      color: #000;
+    }
+  }
+}
+
+.exercise-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1.5rem;
+  width: 100%;
+  max-width: 100%;
+}
+
+.exercise-list {
+  width: 100%;
+  max-width: 100%;
+}
+
+.exercise-card {
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  transition: 0.2s;
+
+  &.added {
+    opacity: 0.6;
+    pointer-events: none;
+  }
+
+  img {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+    border-radius: 6px;
+    margin-bottom: 0.8rem;
+  }
+}
+
+.exercise-content {
+  h4 {
+    margin-bottom: 0.5rem;
+  }
+
+  p {
+    margin: 0.3rem 0;
+    font-size: 0.9rem;
+  }
+
+  button {
+    background: #f1c40f;
+    border: none;
+    padding: 0.4rem 0.8rem;
+    border-radius: 5px;
+    cursor: pointer;
+    color: #000;
+    font-weight: 500;
+
+    &:hover {
+      background: #d4ac0d;
+    }
+  }
+}
+
+.pagination {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+
+  button {
+    padding: 0.5rem 1rem;
+    background: #f1c40f;
+    color: #000;
+    border: none;
+    border-radius: 5px;
+
+    &:disabled {
+      background: #ccc;
+      color: #777;
+      cursor: not-allowed;
+    }
+  }
+}
+
+.no-routines {
+  padding: 1rem;
+  color: #777;
+  text-align: center;
+}
+
+.page-container {
+  width: 100%;
+  max-width: 1300px;
+  margin: 0 auto;
+}

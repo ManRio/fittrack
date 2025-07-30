@@ -1,0 +1,44 @@
+<section class="dashboard">
+  <h1>👋 ¡Hola, {{ user.name || "usuario" }}!</h1>
+
+  <div class="overview">
+    <div class="card">
+      <h3>🎯 Objetivo</h3>
+      <p>{{ user.goal || "No definido" }}</p>
+    </div>
+
+    <div class="card">
+      <h3>⚖️ Peso actual</h3>
+      <p>{{ user.weight || "-" }} kg</p>
+    </div>
+
+    <div class="card">
+      <h3>✅ Hábitos de hoy</h3>
+      <p>{{ habitsDone() }} / {{ totalHabits() }} completados</p>
+    </div>
+  </div>
+
+  <!-- Noticias de salud -->
+  <div class="health-news" *ngIf="news.length > 0">
+    <h2>📰 Noticias sobre salud y bienestar</h2>
+    <div class="news-grid">
+      <div class="news-card" *ngFor="let item of news">
+        <img [src]="item.image || 'assets/default-news.webp'" alt="Imagen noticia" />
+        <div class="content">
+          <h3>{{ item.title }}</h3>
+          <p>{{ item.description }}</p>
+          <a [href]="item.url" target="_blank">Leer más</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="quick-links">
+    <h2>Accesos rápidos</h2>
+    <div class="links">
+      <a routerLink="/profile">👤 Perfil</a>
+      <a routerLink="/habits">📋 Hábitos</a>
+      <a routerLink="/routines">🏋️ Rutinas</a>
+      <a routerLink="/progress">📈 Progreso</a>
+    </div>
+  </div>
+</section>

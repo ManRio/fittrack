@@ -1,0 +1,63 @@
+<section class="profile-container">
+  <h1>👤 Perfil de Usuario</h1>
+
+  <div class="profile-card">
+    <div class="photo-section">
+      <img [src]="user.photoUrl || defaultPhoto" alt="Foto de perfil" />
+      <div *ngIf="editMode" class="photo-input">
+        <label>📷 Cambiar foto:</label>
+        <input
+          type="file"
+          accept="image/*"
+          title="Selecciona una foto de perfil"
+          placeholder="Selecciona una foto de perfil"
+          (change)="onPhotoSelected($event)"
+        />
+      </div>
+    </div>
+
+    <form *ngIf="editMode" (ngSubmit)="saveProfile()" class="profile-form">
+      <label>
+        Nombre:
+        <input [(ngModel)]="user.name" name="name" required />
+      </label>
+
+      <label>
+        Edad:
+        <input type="number" [(ngModel)]="user.age" name="age" />
+      </label>
+
+      <label>
+        Altura (cm):
+        <input type="number" [(ngModel)]="user.height" name="height" />
+      </label>
+
+      <label>
+        Peso (kg):
+        <input type="number" [(ngModel)]="user.weight" name="weight" />
+      </label>
+
+      <label>
+        Objetivo:
+        <select [(ngModel)]="user.goal" name="goal">
+          <option value="">-- Selecciona --</option>
+          <option *ngFor="let g of goals" [value]="g">{{ g }}</option>
+        </select>
+      </label>
+
+      <div class="form-buttons">
+        <button type="submit">💾 Guardar</button>
+        <button type="button" (click)="toggleEdit()">❌ Cancelar</button>
+      </div>
+    </form>
+
+    <div *ngIf="!editMode" class="profile-details">
+      <p><strong>Nombre:</strong> {{ user.name || "No especificado" }}</p>
+      <p><strong>Edad:</strong> {{ user.age || "-" }}</p>
+      <p><strong>Altura:</strong> {{ user.height || "-" }} cm</p>
+      <p><strong>Peso:</strong> {{ user.weight || "-" }} kg</p>
+      <p><strong>Objetivo:</strong> {{ user.goal || "No definido" }}</p>
+      <button (click)="toggleEdit()">✏️ Editar perfil</button>
+    </div>
+  </div>
+</section>

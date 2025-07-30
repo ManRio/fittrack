@@ -1,0 +1,177 @@
+<section class="routines-fullscreen">
+  <div class="page-container">
+    <header class="routines-header">
+      <h1>🏋️ Rutinas y Ejercicios</h1>
+      <button (click)="toggleForm()" class="add-btn">
+        {{ showForm ? "← Volver" : "+ Nueva Rutina" }}
+      </button>
+    </header>
+
+    <!-- Filtros -->
+    <section class="filter-bar">
+      <button
+        *ngFor="let part of allBodyParts"
+        (click)="filterByBodyPart(part)"
+        [class.active]="selectedBodyPart === part"
+      >
+        {{ part === "all" ? "Todos" : (part | titlecase) }}
+      </button>
+    </section>
+
+    <!-- Formulario -->
+    <form *ngIf="showForm" (ngSubmit)="saveRoutine()" class="routine-form">
+      <div class="form-group">
+        <label for="name">Nombre:</label>
+        <input
+          id="name"
+          type="text"
+          [(ngModel)]="routine.name"
+          name="name"
+          required
+        />
+      </div>
+
+      <div class="form-group">
+        <label for="description">Descripción:</label>
+        <textarea
+          id="description"
+          [(ngModel)]="routine.description"
+          name="description"
+        ></textarea>
+      </div>
+
+      <div class="form-group days-group">
+        <label>Días:</label>
+        <div class="checkboxes">
+          <label *ngFor="let day of days">
+            <input
+              type="checkbox"
+              [checked]="routine.days.includes(day)"
+              (change)="toggleDay(day)"
+            />
+            {{ day }}
+          </label>
+        </div>
+      </div>
+
+      <div class="form-buttons">
+        <button type="submit">💾 Guardar</button>
+        <button type="button" (click)="cancel()">❌ Cancelar</button>
+      </div>
+
+      <h3>📝 Ejercicios añadidos</h3>
+      <div class="exercise-grid">
+        <div class="exercise-card" *ngFor="let ex of routine.exercises">
+          <img *ngIf="ex.gifUrl" [src]="ex.gifUrl" alt="ejercicio" />
+          <div class="exercise-content">
+            <h4>{{ ex.name }}</h4>
+            <div class="inputs">
+              <label
+                >Series:
+                <input
+                  type="number"
+                  [(ngModel)]="ex.sets"
+                  name="sets{{ ex.id }}"
+              /></label>
+              <label
+                >Reps:
+                <input
+                  type="number"
+                  [(ngModel)]="ex.reps"
+                  name="reps{{ ex.id }}"
+              /></label>
+              <label
+                >Peso:
+                <input
+                  type="number"
+                  [(ngModel)]="ex.weight"
+                  name="weight{{ ex.id }}"
+              /></label>
+            </div>
+            <button type="button" (click)="removeExerciseFromRoutine(ex.id)">
+              ❌ Quitar
+            </button>
+          </div>
+        </div>
+      </div>
+    </form>
+
+    <!-- Rutinas -->
+    <div *ngIf="!showForm">
+      <h2>📋 Todas tus Rutinas</h2>
+      <div *ngIf="routines.length === 0" class="no-routines">
+        No tienes rutinas aún.
+      </div>
+      <div class="routine-list" *ngIf="routines.length > 0">
+        <div class="routine-card" *ngFor="let r of routines; let i = index">
+          <h3>{{ r.name }}</h3>
+          <p>{{ r.description }}</p>
+          <p><strong>Días:</strong> {{ r.days.join(", ") }}</p>
+          <div class="exercise-grid">
+            <div class="exercise-card" *ngFor="let ex of r.exercises">
+              <img *ngIf="ex.gifUrl" [src]="ex.gifUrl" alt="Ejercicio" />
+              <div class="exercise-content">
+                <h4>{{ ex.name }}</h4>
+                <p>
+                  <strong>Series:</strong> {{ ex.sets }} |
+                  <strong>Reps:</strong> {{ ex.reps }} | <strong>Peso:</strong>
+                  {{ ex.weight }} kg
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="card-actions">
+            <button (click)="editRoutine(i)">Editar</button>
+            <button (click)="deleteRoutine(i)">Eliminar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Lista de ejercicios -->
+    <section class="exercise-list">
+      <h2>🏃 Ejercicios Disponibles</h2>
+      <div class="exercise-grid">
+        <div
+          class="exercise-card"
+          *ngFor="let exercise of pagedExercises"
+          [class.added]="isExerciseAdded(exercise.id)"
+        >
+          <img
+            *ngIf="exercise.gifUrl"
+            [src]="exercise.gifUrl"
+            alt="Ejercicio"
+          />
+          <div class="exercise-content">
+            <h4>{{ exercise.name }}</h4>
+            <p>
+              <em>Parte: {{ exercise.bodyPart }}</em>
+            </p>
+            <p>
+              <em>Objetivo: {{ exercise.target }}</em>
+            </p>
+            <p><strong>Equipo:</strong> {{ exercise.equipment }}</p>
+            <button
+              type="button"
+              (click)="addExerciseToRoutine(exercise)"
+              *ngIf="!isExerciseAdded(exercise.id)"
+            >
+              ➕ Añadir
+            </button>
+            <span *ngIf="isExerciseAdded(exercise.id)">✅ Añadido</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="pagination">
+        <button (click)="prevPage()" [disabled]="currentPage === 1">
+          ← Anterior
+        </button>
+        <span>Página {{ currentPage }} / {{ totalPages }}</span>
+        <button (click)="nextPage()" [disabled]="currentPage === totalPages">
+          Siguiente →
+        </button>
+      </div>
+    </section>
+  </div>
+</section>

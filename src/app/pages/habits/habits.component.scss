@@ -1,0 +1,40 @@
+.habits-container {
+  max-width: 600px;
+  margin: 2rem auto;
+  padding: 1rem;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  font-family: "Segoe UI", sans-serif;
+}
+
+.habits-container h1 {
+  margin-bottom: 1rem;
+  color: #2c3e50;
+}
+
+.habits-list {
+  list-style: none;
+  padding: 0;
+
+  li {
+    padding: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    border-bottom: 1px solid #eee;
+
+    &.completed span {
+      text-decoration: line-through;
+      color: #999;
+    }
+
+    input[type="checkbox"] {
+      transform: scale(1.2);
+    }
+
+    span {
+      flex: 1;
+    }
+  }
+}
